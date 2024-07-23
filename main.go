@@ -29,7 +29,7 @@ func main() {
 		// obtaining user input
 		lettersToColor := os.Args[2]
 		words := os.Args[3]
-		bannerFileName := "standard.txt"
+		bannerFileName := "banners/standard.txt"
 
 		// obtainng RGB values for color using 'PrintColored' function
 		r, g, b := src.PrintColored(colorName)
@@ -45,10 +45,10 @@ func main() {
 		words = src.ReadInput(words) // + "\n"
 		// fmt.Println(words)
 		matches := re.FindAllStringSubmatchIndex(words, -1)
-		result := ""
+
 
 		if len(matches) == 0 {
-			result = src.PrintAsciiArt(words, bannerFileName)
+			fmt.Print(src.PrintAsciiArt(words, bannerFileName))
 			// fmt.Printf("%s", result)
 		} else {
 			lastIndex := 0
@@ -57,19 +57,19 @@ func main() {
 				start, end := match[0], match[1]
 
 				if start > lastIndex {
-					result = src.PrintAsciiArt(words[lastIndex:start], bannerFileName)
+					fmt.Print(src.PrintAsciiArt(words[lastIndex:start], bannerFileName))
 				}
 
-				result += foregroundColor
-				result += src.PrintAsciiArt(words[start:end], bannerFileName)
-				result += reset_color
+			 
+				fmt.Print(foregroundColor,src.PrintAsciiArt(words[start:end], bannerFileName),reset_color)
+			
 
 				lastIndex = end
 			}
 			if lastIndex < len(words) {
-				result += src.PrintAsciiArt(words[lastIndex:], bannerFileName)
+				fmt.Print(src.PrintAsciiArt(words[lastIndex:], bannerFileName))
 			}
 		}
-		print(result)
+
 	}
 }

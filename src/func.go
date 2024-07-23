@@ -19,11 +19,11 @@ func CheckBannerName(fileName string) string {
 	bannerFileName := ""
 	switch fileName {
 	case "thinkertoy":
-		bannerFileName = "thinkertoy.txt"
+		bannerFileName = "banners/thinkertoy.txt"
 	case "standard":
-		bannerFileName = "standard.txt"
+		bannerFileName = "banners/standard.txt"
 	case "shadow":
-		bannerFileName = "shadow.txt"
+		bannerFileName = "banners/shadow.txt"
 	default:
 		bannerFileName = ""
 		fmt.Println("Valid template names are :[standard][thinkertoy][shadow]")
