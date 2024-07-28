@@ -48,37 +48,47 @@ func ReadInput(str string) string {
 }
 
 // PrintAsciiArt returns a string of ASCII graphical representation of characters
-func PrintAsciiArt(inputString string, asciiFile string) string {
+func PrintAsciiArt(inputString, substr, color, asciiFile string) {
 	asciiMap := ReadBannerContent(asciiFile)
 
-	var output strings.Builder
+	// runes := []rune(inputString)
 
-	words := strings.Split(inputString, "\\n")
+	words := strings.Split(inputString, "\n")
+	reset := "\033[0m"
+	color =  "\033[0m"
+	// lines := ""
 
-	// checks for words made of entirely strings.
-	for j, word := range words {
-		if word == "" {
-			if j < len(words)-1 {
-				output.WriteString("\n")
-			}
-		} else {
-			lines := make([]string, 8)
-			// loop through character of a word, attaching each line of map for that char to a slice of length 8
-			for _, char := range word {
-				figure, ok := asciiMap[int(char)]
-				if ok {
-					for i := 0; i < 8; i++ {
-						lines[i] += figure[i]
+	for _, word := range words {
+		for i := 0; i < 8; i++ {
+			for ind := 0; ind < len(words); ind++ {
+				char := word[ind]
+				if char == '\n' {
+					println()
+					continue
+				}
+				if ind <= len(word)-len(substr) && word[ind:ind+len(substr)] == substr {
+					for j := 0; j < len(substr); j++ { // range for
+						char := word[ind+j]
+						figure, ok := asciiMap[int(char)]
+						if ok {
+							// lines += figure[i] + "\n"
+							// line := readMap(figure[i])
+							fmt.Printf("\033[31m" + figure[i] + reset)
+						}
 					}
+					ind += len(substr) - 1
+				} else {
+					figure, ok := asciiMap[int(char)]
+					if ok {
+						// lines += figure[i] + "\n"
+						fmt.Print(figure[i])
+					}
+					// fmt.Print(map[int(char-' ')*9+1+i])
 				}
 			}
-			// write to the output string
-			for i := 0; i < 8; i++ {
-				output.WriteString((lines[i] + "\n"))
-			}
+			fmt.Println()
 		}
 	}
-	return output.String()
 }
 
 // ReadBannerContent takes a fileName as a string and returns a map with ascii number as key and each figure as it's value
@@ -109,4 +119,12 @@ func ReadBannerContent(text string) map[int][]string {
 
 	}
 	return AsciiMap
+}
+
+func readMap(slice []string) string {
+	str := ""
+	for _, value := range slice{
+		str+=value
+	}
+	return str
 }
