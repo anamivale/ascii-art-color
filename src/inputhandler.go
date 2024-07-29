@@ -25,33 +25,54 @@ func HandleInput(str string) string {
 }
 
 // SortArgs takes in a string of arguments and flags sorts and stores them in there respective variables.
-func HandleArgs() (string, string, string, error) {
-	var inputStr, outputFile, bannerFile string
-	errMessage := "Usage: go run . [OPTION] [STRING] [BANNER]\n\nEx: go run . --output=<filename.txt> something standard"
+func HandleArgs() (string, string,string, string, string, error) {
+	var subStr, mainStr, color, outputFile, bannerFile string
+	errMessage := "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\""
+
+	
 
 	flagVar := flag.String("output", "", "name of the file to contain the output")
+	colorflag := flag.String("color", "", "name of the color to use in printing the output")
 
 	flag.Parse()
 
 	outputFile = *flagVar
+	color = *colorflag
 	nonFlag := flag.Args()
 
 	if outputFile == "" {
 		switch {
 		case len(nonFlag) == 1:
-			return nonFlag[0], "", "standard", nil
+			return nonFlag[0],nonFlag[0], color,"", "standard", nil
 		case len(nonFlag) == 2:
-			return nonFlag[0], "", nonFlag[1], nil
+			return nonFlag[0],nonFlag[1],color, "","standard", nil
+		case len(nonFlag) == 3: 
+			return nonFlag[0], nonFlag[1],color,"",nonFlag[2],nil
+		}
+	} else  if color == ""{
+		switch  {
+		case len(nonFlag) == 1:
+			return nonFlag[0],nonFlag[0], "",outputFile, "standard", nil
+		case len(nonFlag) != 1:
+			return "", "", "","","", errors.New(errMessage)
+		}
+
+	} else if color == "" && outputFile == "" {
+		switch {
+		case len(nonFlag) == 1:
+			return nonFlag[0],nonFlag[0], "","", "standard", nil			
 		}
 	} else {
 		switch {
 		case len(nonFlag) == 0:
-			return "", "", "", errors.New(errMessage)
+			return "", "", "","","", errors.New(errMessage)
 		case len(nonFlag) == 1:
-			return nonFlag[0], outputFile, "standard", nil
+			return nonFlag[0],nonFlag[0],color, outputFile, "standard", nil
 		case len(nonFlag) == 2:
-			return nonFlag[0], outputFile, nonFlag[1], nil
+			return nonFlag[0],nonFlag[1],color, outputFile,"standard", nil
+		case len(nonFlag) == 3:
+			return nonFlag[0],nonFlag[1],color, outputFile,nonFlag[2], nil
 		}
 	}
-	return inputStr, outputFile, bannerFile, errors.New(errMessage)
+	return subStr, mainStr, color, outputFile, bannerFile, errors.New(errMessage)
 }
