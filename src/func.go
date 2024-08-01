@@ -55,35 +55,42 @@ func PrintAsciiArt(inputString, substr, color, asciiFile string) {
 
 	words := strings.Split(inputString, "\n")
 	reset := "\033[0m"
-	color =  "\033[0m"
+	color = "\033[0m"
 	// lines := ""
-
-	for _, word := range words {
-		for i := 0; i < 8; i++ {
-			for ind := 0; ind < len(words); ind++ {
-				char := word[ind]
-				if char == '\n' {
-					println()
-					continue
-				}
+	// println(inputString)
+	// println(string(words))
+	for i := 0; i < 8; i++ {
+		for _, word := range words {
+			word = strings.ReplaceAll(word, "\\n", "\n")
+			// println(i, ":", word)
+			// println(word)
+			for ind := 0; ind < len(word); ind++ {
+				// char := word[ind]
+				// if char == '\n' {
+				// 	println()
+				// 	continue
+				// }
+				// println(string(char))
 				if ind <= len(word)-len(substr) && word[ind:ind+len(substr)] == substr {
 					for j := 0; j < len(substr); j++ { // range for
 						char := word[ind+j]
+						if char == '\n' {
+							println()
+							//continue
+						}
+
 						figure, ok := asciiMap[int(char)]
 						if ok {
-							// lines += figure[i] + "\n"
-							// line := readMap(figure[i])
 							fmt.Printf("\033[31m" + figure[i] + reset)
 						}
 					}
 					ind += len(substr) - 1
 				} else {
+					char := word[ind]
 					figure, ok := asciiMap[int(char)]
 					if ok {
-						// lines += figure[i] + "\n"
 						fmt.Print(figure[i])
 					}
-					// fmt.Print(map[int(char-' ')*9+1+i])
 				}
 			}
 			fmt.Println()
@@ -123,8 +130,8 @@ func ReadBannerContent(text string) map[int][]string {
 
 func readMap(slice []string) string {
 	str := ""
-	for _, value := range slice{
-		str+=value
+	for _, value := range slice {
+		str += value
 	}
 	return str
 }
