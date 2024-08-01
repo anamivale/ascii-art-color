@@ -51,47 +51,80 @@ func ReadInput(str string) string {
 func PrintAsciiArt(inputString, substr, color, asciiFile string) {
 	asciiMap := ReadBannerContent(asciiFile)
 
-	// runes := []rune(inputString)
+	// // runes := []rune(inputString)
+	inputString = strings.ReplaceAll(inputString, "\\n", "\n")
 
 	words := strings.Split(inputString, "\n")
-	reset := "\033[0m"
+	 reset := "\033[0m"
 	color = "\033[0m"
 	// lines := ""
 	// println(inputString)
 	// println(string(words))
-	for i := 0; i < 8; i++ {
-		for _, word := range words {
-			word = strings.ReplaceAll(word, "\\n", "\n")
-			// println(i, ":", word)
-			// println(word)
-			for ind := 0; ind < len(word); ind++ {
-				// char := word[ind]
-				// if char == '\n' {
-				// 	println()
-				// 	continue
-				// }
-				// println(string(char))
-				if ind <= len(word)-len(substr) && word[ind:ind+len(substr)] == substr {
-					for j := 0; j < len(substr); j++ { // range for
-						char := word[ind+j]
-						if char == '\n' {
-							println()
-							//continue
-						}
 
+	for _, word := range words {
+		if word == "" {
+			fmt.Println()
+			continue
+		}
+
+		for i := 0; i < 8; i++ {
+			j := 0
+			for j < len(word) {
+				if j <= len(word)-len(substr) && word[j:j+len(substr)] == substr {
+					for k := 0; k < len(substr); k++ { // range for
+						char := word[j+k]
 						figure, ok := asciiMap[int(char)]
 						if ok {
 							fmt.Printf("\033[31m" + figure[i] + reset)
 						}
 					}
-					ind += len(substr) - 1
+					j += len(substr)
 				} else {
-					char := word[ind]
+					char := word[j]
 					figure, ok := asciiMap[int(char)]
 					if ok {
 						fmt.Print(figure[i])
 					}
+					j++
 				}
+
+				// word := inputString
+				// word = strings.ReplaceAll(word, "\n", "\\n")
+				// // println(i, ":", word)
+				// // println(word)
+				// for ind := 0; ind < len(word); ind++ {
+				// 	char := word[ind]
+				// 	// println(string(char))
+				// 	if char == '\n' {
+				// 		println("s")
+				// 		continue
+				// 	}
+				// // println(string(char))
+				// if ind <= len(word)-len(substr) && word[ind:ind+len(substr)] == substr {
+				// 	for j := 0; j < len(substr); j++ { // range for
+				// 		char := word[ind+j]
+				// 		if char == '\n' {
+				// 			println()
+				// 			break
+				// 		}
+
+				// 		figure, ok := asciiMap[int(char)]
+				// 		if ok {
+				// 			fmt.Printf("\033[31m" + figure[i] + reset)
+				// 		}
+				// 	}
+				// 	ind += len(substr) - 1
+				// } else {
+				// 	char := word[ind]
+				// 	if char == '\n' {
+				// 		println()
+				// 		continue
+				// 	}
+				// 	figure, ok := asciiMap[int(char)]
+				// 	if ok {
+				// 		fmt.Print(figure[i])
+				// 	}
+				// }
 			}
 			fmt.Println()
 		}
