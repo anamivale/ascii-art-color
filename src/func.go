@@ -8,8 +8,10 @@ import (
 // PrintAsciiArt returns a string of ASCII graphical representation of characters
 func PrintAsciiArt(inputString, substr, color string, asciiMap map[int][]string) {
 	words := strings.Split(inputString, "\n")
-	reset := "\033[0m"
-	color = "\033[0m"
+	reset := "\x1b[0m"
+
+
+	fmt.Printf(color+inputString+reset+"\n")
 
 	for _, word := range words {
 		if word == "" {
@@ -25,7 +27,7 @@ func PrintAsciiArt(inputString, substr, color string, asciiMap map[int][]string)
 						char := word[j+k]
 						figure, ok := asciiMap[int(char)]
 						if ok {
-							fmt.Printf("\033[31m" + figure[i] + reset)
+							fmt.Printf(color + figure[i] + reset)
 						}
 					}
 					j += len(substr)
@@ -43,26 +45,3 @@ func PrintAsciiArt(inputString, substr, color string, asciiMap map[int][]string)
 		}
 	}
 }
-
-// ReadBannerContent takes a fileName as a string and returns a map with ascii number as key and each figure as it's value
-func ReadBannerContent(bannerContents []string) map[int][]string {
-	// var file1 []string
-	// creating a map
-	AsciiMap := make(map[int][]string)
-	lineCount := 0
-	initialAsciiValue := 32
-	for i := 0; i < len(bannerContents); i++ {
-		if bannerContents[i] == "" {
-			continue
-		}
-		AsciiMap[initialAsciiValue] = append(AsciiMap[initialAsciiValue], bannerContents[i])
-		lineCount++
-
-		if lineCount%8 == 0 {
-			initialAsciiValue++
-		}
-
-	}
-	return AsciiMap
-}
-
