@@ -11,7 +11,7 @@ func PrintAsciiArt(inputString, substr, color string, asciiMap map[int][]string)
 	reset := "\x1b[0m"
 
 
-	fmt.Printf(color+inputString+reset+"\n")
+	// fmt.Println(inputString)
 
 	for _, word := range words {
 		if word == "" {
