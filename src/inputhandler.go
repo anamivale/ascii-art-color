@@ -10,8 +10,9 @@ import (
 
 // ReadInput returns a string of valid characters
 func ReadInput(text string) (string, error) {
-	text = strings.ReplaceAll(text,"\\n","\n")
-	text = strings.ReplaceAll(text, "\r", "")
+	println(text)
+	text = strings.ReplaceAll(text, "\n", "\\n")
+	text = strings.ReplaceAll(text, "\\t", "   ")
 	for _, char := range text {
 		if char < 32 || char > 126 {
 			if char == 10 || char == 13 {
@@ -21,6 +22,7 @@ func ReadInput(text string) (string, error) {
 			}
 		}
 	}
+	println(text)
 	return text, nil
 }
 
@@ -43,6 +45,13 @@ func HandleArgs() (string, string, string, string, error) {
 				return "", "", "", "", errors.New(errMessage)
 			}
 		}
+		if strings.HasPrefix(arg, "--") {
+			parts := strings.SplitN(arg, "=", 2)
+			if len(parts) != 2 {
+				return "", "", "", "", errors.New(errMessage)
+			}
+		}
+
 	}
 
 	colorFlagVar := flag.String("color", "", "name of the color")
@@ -59,7 +68,7 @@ func HandleArgs() (string, string, string, string, error) {
 		switch {
 		case len(nonFlag) == 1:
 			println(nonFlag[0])
-			return args[0],args[0], "white", "standard", nil
+			return args[0], args[0], "white", "standard", nil
 		case len(nonFlag) == 2:
 			return args[0], args[0], "white", args[1], nil
 		}
