@@ -8,71 +8,67 @@ import (
 	"strings"
 )
 
-// ReadInput returns a string of Valided input characters.
-func HandleInput(str string) string {
-	// Handling special characters
-	str = strings.ReplaceAll(str, "\n", "\\n")
-	str = strings.ReplaceAll(str, "\\t", "    ")
-
-	// Loop to check characters are within our range (32 - 126)
-	for _, value := range str {
-		if value < 32 || value > 126 {
-			fmt.Println("Provide characters within the ASCII range (32-126)")
-			os.Exit(1)
+// ReadInput returns a string of valid characters
+func ReadInput(text string) (string, error) {
+	text = strings.ReplaceAll(text, "\r", "")
+	for _, char := range text {
+		if char < 32 || char > 126 {
+			if char == 10 || char == 13 {
+				continue
+			} else {
+				return "", fmt.Errorf(" char is not valid")
+			}
 		}
 	}
-	return str
+	return text, nil
 }
 
 // SortArgs takes in a string of arguments and flags sorts and stores them in there respective variables.
-func HandleArgs() (string, string,string, string, string, error) {
-	var subStr, mainStr, color, outputFile, bannerFile string
+func HandleArgs() (string, string, string, string, error) {
+	var inputStr, substr, color, bannerFile string
 	errMessage := "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\""
 
-	
+	// check for unkown flags
+	knownFlags := map[string]bool{
+		"color": true,
+	}
 
-	flagVar := flag.String("output", "", "name of the file to contain the output")
-	colorflag := flag.String("color", "", "name of the color to use in printing the output")
+	for _, arg := range os.Args[1:] {
+		if strings.HasPrefix(arg, "--") || strings.HasPrefix(arg, "-") {
+			flagName := strings.Split(strings.TrimPrefix(arg, "--"), "=")
+
+			if !knownFlags[flagName[0]] {
+				return "", "", "", "", errors.New(errMessage)
+			}
+		}
+	}
+
+	colorFlagVar := flag.String("color", "", "name of the color")
 
 	flag.Parse()
 
-	outputFile = *flagVar
-	color = *colorflag
+	// outputFile = *outputFlagVar
+	color = *colorFlagVar
+
 	nonFlag := flag.Args()
 
-	if outputFile == "" {
+	if color == "" {
 		switch {
 		case len(nonFlag) == 1:
-			return nonFlag[0],nonFlag[0], color,"", "standard", nil
+			return nonFlag[0], "", "", "standard", nil
 		case len(nonFlag) == 2:
-			return nonFlag[0],nonFlag[1],color, "","standard", nil
-		case len(nonFlag) == 3: 
-			return nonFlag[0], nonFlag[1],color,"",nonFlag[2],nil
-		}
-	} else  if color == ""{
-		switch  {
-		case len(nonFlag) == 1:
-			return nonFlag[0],nonFlag[0], "",outputFile, "standard", nil
-		case len(nonFlag) != 1:
-			return "", "", "","","", errors.New(errMessage)
-		}
-
-	} else if color == "" && outputFile == "" {
-		switch {
-		case len(nonFlag) == 1:
-			return nonFlag[0],nonFlag[0], "","", "standard", nil			
+			return nonFlag[0], "", "", nonFlag[1], nil
 		}
 	} else {
 		switch {
-		case len(nonFlag) == 0:
-			return "", "", "","","", errors.New(errMessage)
 		case len(nonFlag) == 1:
-			return nonFlag[0],nonFlag[0],color, outputFile, "standard", nil
+			return nonFlag[0], nonFlag[0], color, "standard", nil
 		case len(nonFlag) == 2:
-			return nonFlag[0],nonFlag[1],color, outputFile,"standard", nil
+			return nonFlag[0], nonFlag[1], color, "standard", nil
 		case len(nonFlag) == 3:
-			return nonFlag[0],nonFlag[1],color, outputFile,nonFlag[2], nil
+			return nonFlag[0], nonFlag[1], color, nonFlag[2], nil
 		}
 	}
-	return subStr, mainStr, color, outputFile, bannerFile, errors.New(errMessage)
+
+	return inputStr, substr, color, bannerFile, errors.New(errMessage)
 }
