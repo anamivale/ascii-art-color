@@ -10,6 +10,7 @@ import (
 
 // ReadInput returns a string of valid characters
 func ReadInput(text string) (string, error) {
+	text = strings.ReplaceAll(text,"\\n","\n")
 	text = strings.ReplaceAll(text, "\r", "")
 	for _, char := range text {
 		if char < 32 || char > 126 {
@@ -25,7 +26,7 @@ func ReadInput(text string) (string, error) {
 
 // SortArgs takes in a string of arguments and flags sorts and stores them in there respective variables.
 func HandleArgs() (string, string, string, string, error) {
-	var inputStr, substr, color, bannerFile string
+	var inputStr, subStr, color, bannerFile string
 	errMessage := "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\""
 
 	// check for unkown flags
@@ -70,5 +71,5 @@ func HandleArgs() (string, string, string, string, error) {
 		}
 	}
 
-	return inputStr, substr, color, bannerFile, errors.New(errMessage)
+	return subStr, inputStr, color, bannerFile, errors.New(errMessage)
 }
