@@ -6,6 +6,7 @@ import (
 )
 
 func PrintColored(color string) (int, int, int, error) {
+	color = strings.ToLower(color)
 	type ColorMap map[string][3]int
 
 	colors := ColorMap{
@@ -78,7 +79,7 @@ func PrintColored(color string) (int, int, int, error) {
 		g = value[1]
 		b = value[2]
 	} else {
-		return 0, 0, 0, fmt.Errorf("ERror: %v is not available",color)
+		return 0, 0, 0, fmt.Errorf(" Error: %v is not available",color)
 	}
 
 	return r, g, b, nil
