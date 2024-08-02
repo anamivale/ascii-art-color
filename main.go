@@ -36,6 +36,12 @@ func main() {
 		println(err)
 		return
 	}
+	subStr, err = src.ReadInput(subStr)
+	if err != nil {
+		println(err)
+		return
+	}
+
 	// handle color
 	// Concatenate everything into a string
 	r, g, b, err := colors.PrintColored(color)
