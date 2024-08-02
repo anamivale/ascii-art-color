@@ -1,34 +1,51 @@
 package main
 
 import (
-	"ascii-art-color/src"
 	"fmt"
 	"os"
+
+	"ascii-art-color/colors"
+	"ascii-art-color/src"
 )
 
 func main() {
 	// Handle if no fileName is provided as argument
-	if len(os.Args) < 4 {
+	if len(os.Args) < 2 || len(os.Args) > 5 {
 		fmt.Println("Usage: go run . [OPTION] [STRING]")
 		fmt.Println("EX: go run . --color=<color> <letters to be colored> \"something\"")
 		return
 	}
 
-	inputStr, subStr,color, bannerName, err := src.HandleArgs()
-	
+	subStr,inputStr, color, bannerName, err := src.HandleArgs()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-	bannerContent,err := src.GetBanner(bannerName)
+	// handle banner
+	bannerContent, err := src.GetBanner(bannerName)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	asciiMap := src.ReadBannerContent(bannerContent)
-	words, err  := src.ReadInput(inputStr) // + "\n"
+
+	// handle input string
+	words, err := src.ReadInput(inputStr) 
+	if err != nil {
+		println(err)
+		return
+	}
+	// handle color
+	// Concatenate everything into a string
+	r, g, b, err := colors.PrintColored(color)
 	if err != nil {
 		println(err)
 		return
 	}
 
-	src.PrintAsciiArt(words, subStr, color, asciiMap)
-	
+	foregroundColor := fmt.Sprintf("\x1b[38;2;%d;%d;%dm", r, g, b)
+	// println(words, subStr)
+
+	src.PrintAsciiArt(words, subStr, foregroundColor, asciiMap)
 }
