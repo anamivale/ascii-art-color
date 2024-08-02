@@ -40,7 +40,7 @@ func main() {
 	// Concatenate everything into a string
 	r, g, b, err := colors.PrintColored(color)
 	if err != nil {
-		println(err)
+		fmt.Printf("%s is not available\n",color)
 		return
 	}
 
