@@ -11,6 +11,7 @@ func PrintColored(color string) (int, int, int, error) {
 
 	colors := ColorMap{
 		"black":            [3]int{0, 0, 0},
+		"orange":			[3]int{255,165,0},
 		"red":              [3]int{255, 0, 0},
 		"green":            [3]int{0, 128, 0},
 		"yellow":           [3]int{255, 255, 0},
