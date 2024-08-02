@@ -29,6 +29,7 @@ func HandleArgs() (string, string, string, string, error) {
 	var inputStr, subStr, color, bannerFile string
 	errMessage := "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\""
 
+	args := os.Args[1:]
 	// check for unkown flags
 	knownFlags := map[string]bool{
 		"color": true,
@@ -53,12 +54,14 @@ func HandleArgs() (string, string, string, string, error) {
 
 	nonFlag := flag.Args()
 
+	// println(nonFlag[0])
 	if color == "" {
 		switch {
 		case len(nonFlag) == 1:
-			return nonFlag[0], "", "", "standard", nil
+			println(nonFlag[0])
+			return args[0],args[0], "white", "standard", nil
 		case len(nonFlag) == 2:
-			return nonFlag[0], "", "", nonFlag[1], nil
+			return args[0], args[0], "white", args[1], nil
 		}
 	} else {
 		switch {
