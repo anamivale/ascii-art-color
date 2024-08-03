@@ -3,7 +3,6 @@ package src
 import (
 	"fmt"
 	"strings"
-	"unicode"
 )
 
 // PrintAsciiArt returns a string of ASCII graphical representation of characters
@@ -27,7 +26,7 @@ func PrintAsciiArt(inputString, substr, color string, asciiMap map[int][]string)
 			for j < len(line) {
 				matchFound := false
 				for _, subLine := range substrLines {
-					if strings.HasPrefix(line[j:], subLine) && (j == 0 || !unicode.IsLetter(rune(line[j-1]))) {
+					if strings.HasPrefix(line[j:], subLine) {
 						// Color the matching part
 						for k := 0; k < len(subLine); k++ {
 							char := line[j+k]
