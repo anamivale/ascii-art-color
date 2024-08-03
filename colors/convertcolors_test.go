@@ -15,7 +15,7 @@ func TestPrintColored(t *testing.T) {
 		wantErr bool
 	}{
 		{"Valid color name",args{"red"},255,0,0,false},
-		{"Valid color name",args{"redy"},0,0,0,true},
+		{"Invalid color name",args{"redy"},0,0,0,true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -49,8 +49,8 @@ func TestHexTo256(t *testing.T) {
 		want2   int
 		wantErr bool
 	}{
-		{"Invalid color",args{"#000000"},0,0,0,false},
-		{"Invalid color",args{"#f00000"},240,0,0,false},
+		{"Invalid color",args{"#09999999"},0,0,0,true},
+		{"Valid color",args{"#f00000"},240,0,0,false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -84,7 +84,8 @@ func TestRgbTo256ColorCode(t *testing.T) {
 		want2   int
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{"Valid RGB input",args{"rgb(255,0,0)"},255,0,0,false},
+		{"Invalid RGB input",args{"rgb(260,0,0)"},0,0,0,true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
