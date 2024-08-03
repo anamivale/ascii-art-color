@@ -10,7 +10,6 @@ import (
 
 // ReadInput returns a string of valid characters.
 func ReadInput(text string) (string, error) {
-	println(text)
 	text = strings.ReplaceAll(text, "\n", "\\n")
 	text = strings.ReplaceAll(text, "\\t", "   ")
 	for _, char := range text {
@@ -22,7 +21,6 @@ func ReadInput(text string) (string, error) {
 			}
 		}
 	}
-	println(text)
 	return text, nil
 }
 

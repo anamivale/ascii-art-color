@@ -41,7 +41,7 @@ func PrintAsciiArt(inputString, substr, color string, asciiMap map[int][]string)
 					}
 				}
 				if !matchFound {
-					// Print regular character
+
 					char := line[j]
 					figure, ok := asciiMap[int(char)]
 					if ok {
@@ -53,7 +53,7 @@ func PrintAsciiArt(inputString, substr, color string, asciiMap map[int][]string)
 			fmt.Println()
 		}
 
-		// Add a newline between words, except after the last word
+		// Add a newline between words
 		if lineIndex < len(inputLines)-1 {
 			fmt.Println()
 		}
