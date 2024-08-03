@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Function GetBanner validates the banner and reads it's content into a string slice.
+// GetBanner validates the banner and reads it's content into a string slice.
 func GetBanner(bannerName string) ([]string, error) {
 	fileSize := 0
 	switch bannerName {
