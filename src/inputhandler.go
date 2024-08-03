@@ -77,7 +77,11 @@ func HandleArgs() (string, string, string, string, error) {
 		case len(nonFlag) == 1:
 			return nonFlag[0], nonFlag[0], color, "standard", nil
 		case len(nonFlag) == 2:
-			return nonFlag[0], nonFlag[1], color, "standard", nil
+			if (nonFlag[1] == "standard" || nonFlag[1] == "thinkertoy" || nonFlag[1] == "shadow") && !(strings.Contains(nonFlag[1], nonFlag[0])) {
+				return nonFlag[0], nonFlag[0], color, nonFlag[1], nil
+			} else {
+				return nonFlag[0], nonFlag[1], color, "standard", nil
+			}
 		case len(nonFlag) == 3:
 			return nonFlag[0], nonFlag[1], color, nonFlag[2], nil
 		}
