@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// ReadInput returns a string of valid characters
+// ReadInput returns a string of valid characters.
 func ReadInput(text string) (string, error) {
 	println(text)
 	text = strings.ReplaceAll(text, "\n", "\\n")
@@ -32,7 +32,7 @@ func HandleArgs() (string, string, string, string, error) {
 	errMessage := "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\""
 
 	args := os.Args[1:]
-	// check for unkown flags
+
 	knownFlags := map[string]bool{
 		"color": true,
 	}
@@ -58,12 +58,10 @@ func HandleArgs() (string, string, string, string, error) {
 
 	flag.Parse()
 
-	// outputFile = *outputFlagVar
 	color = *colorFlagVar
 
 	nonFlag := flag.Args()
 
-	// println(nonFlag[0])
 	if color == "" {
 		switch {
 		case len(nonFlag) == 1:
