@@ -203,7 +203,19 @@ The tests results indicate that all tests in the `colors` and `src` packages ran
   ```sh
   git push origing <feature-name>
   ```
-  - Open a pull request   
+  - Open a pull request  
+
+## Authors
+
+ ### Fred Munene
+ [![Fred Munene](https://learn.zone01kisumu.ke/git/avatars/21a8520289459579567a739fc8de9d33?size=870)](https://github.com/FredMunene)
+
+### Valeria Muhembele
+[![Valeria Muhembele](https://avatars.githubusercontent.com/u/61202849?v=4)](https://github.com/anamivale)
+
+### Ouma Ouma 
+[![Ouma Ouma](https://learn.zone01kisumu.ke/git/avatars/d05acb5758f408a6bf45142f8d5462ca?size=870)](https://github.com/garveyshah)
+
 
 ## License
 This project is licensed under the MIT License, see the [LICENSE](LICENSE) file for details.
