@@ -7,9 +7,10 @@ This project provides a Go-based solution to generate ASCII art from input text,
 
 - **Generate ASCII Art**: Convert plain text into stylized ASCII art.
 - **Color Substrings**: Apply specific colors to substrings within the ASCII art.
-- **Supports Different Banners**: Standard, Shadow, and Thinkertoy.
-- **Supports Different color Models**: Hex, RGB and Ansi.
+- **Supports multiple color formats**: Named colors, Hex, and RGB colors.
+
 - **Handles Non-ASCII Characters**: Ensures all input characters are valid ASCII.
+- **Supports Different Banners**: Standard, Shadow, and Thinkertoy.
 
 ## Project Structure
 ```
