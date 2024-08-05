@@ -44,8 +44,6 @@ func GetBanner(bannerName string) ([]string, error) {
 
 // ReadBannerContent takes a fileName as a string and returns a map with ascii number as key and each figure as it's value
 func ReadBannerContent(bannerContents []string) map[int][]string {
-	// var file1 []string
-	// creating a map
 	AsciiMap := make(map[int][]string)
 	lineCount := 0
 	initialAsciiValue := 32

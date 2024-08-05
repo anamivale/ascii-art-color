@@ -42,8 +42,7 @@ func main() {
 		return
 	}
 
-	// handle color
-	// Concatenate everything into a string
+	// Handle color
 	r, g, b, err := colors.PrintColored(color)
 	if err != nil {
 		fmt.Printf("%s is not available\n",color)
@@ -51,7 +50,6 @@ func main() {
 	}
 
 	foregroundColor := fmt.Sprintf("\x1b[38;2;%d;%d;%dm", r, g, b)
-	// println(words, subStr)
 
 	src.PrintAsciiArt(words, subStr, foregroundColor, asciiMap)
 }
