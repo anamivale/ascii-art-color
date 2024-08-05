@@ -11,8 +11,7 @@ import (
 func main() {
 	// Handle if no fileName is provided as argument
 	if len(os.Args) < 2 || len(os.Args) > 5 {
-		fmt.Println("Usage: go run . [OPTION] [STRING]")
-		fmt.Println("EX: go run . --color=<color> <letters to be colored> \"something\"")
+		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 		return
 	}
 
