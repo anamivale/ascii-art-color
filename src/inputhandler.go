@@ -35,10 +35,7 @@ func HandleArgs() (string, string, string, string, error) {
 		"color": true,
 	}
 
-	for i, arg := range os.Args[1:] {
-		if i > 0 && arg == "--color=red" {
-			return "", "", "", "", errors.New(errMessage)
-		}
+	for _, arg := range os.Args[1:] {
 		if strings.HasPrefix(arg, "--") || strings.HasPrefix(arg, "-") {
 			flagName := strings.Split(strings.TrimPrefix(arg, "--"), "=")
 
